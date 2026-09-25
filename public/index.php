@@ -4,14 +4,18 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+// Local Laravel uses public/ as the document root; shared hosting may place
+// this file directly in htdocs alongside vendor/ and bootstrap/.
+$basePath = is_dir(__DIR__.'/vendor') ? __DIR__ : dirname(__DIR__);
+
 // Determine if the application is in maintenance mode...
-if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+if (file_exists($maintenance = $basePath.'/storage/framework/maintenance.php')) {
     require $maintenance;
 }
 
 // Register the Composer autoloader...
-require __DIR__.'/../vendor/autoload.php';
+require $basePath.'/vendor/autoload.php';
 
 // Bootstrap Laravel and handle the request...
-(require_once __DIR__.'/../bootstrap/app.php')
+(require_once $basePath.'/bootstrap/app.php')
     ->handleRequest(Request::capture());
