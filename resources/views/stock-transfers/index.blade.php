@@ -1,0 +1,5 @@
+@extends('layouts.app')
+@section('title', 'Stock Transfers')
+@section('content')
+<div class="d-flex justify-content-between mb-3"><h2>Stock Transfers</h2><a class="btn btn-primary" href="{{ route('stock-transfers.create') }}">New Transfer</a></div><div class="table-responsive"><table class="table"><thead><tr><th>Reference</th><th>From</th><th>To</th><th>Date</th><th>Status</th></tr></thead><tbody>@forelse($transfers as $transfer)<tr><td>{{ $transfer->reference_number }}</td><td>{{ $transfer->sourceLocation->name }}</td><td>{{ $transfer->destinationLocation->name }}</td><td>{{ $transfer->transfer_date?->format('Y-m-d') }}</td><td>{{ ucfirst($transfer->status) }}</td></tr>@empty<tr><td colspan="5">No transfers recorded.</td></tr>@endforelse</tbody></table></div>{{ $transfers->links() }}
+@endsection

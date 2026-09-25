@@ -1,0 +1,5 @@
+@extends('layouts.app')
+@section('title', 'Stock Returns and Damage')
+@section('content')
+<div class="d-flex justify-content-between mb-3"><h2>Stock Returns and Damage</h2><a class="btn btn-primary" href="{{ route('stock-returns.create') }}">New Record</a></div><div class="table-responsive"><table class="table"><thead><tr><th>Product</th><th>Type</th><th>Disposition</th><th>Quantity</th><th>Date</th></tr></thead><tbody>@forelse($returns as $return)<tr><td>{{ $return->product->product_name }}</td><td>{{ ucfirst(str_replace('_', ' ', $return->type)) }}</td><td>{{ ucfirst($return->disposition) }}</td><td>{{ $return->quantity }}</td><td>{{ $return->return_date?->format('Y-m-d') }}</td></tr>@empty<tr><td colspan="5">No return or damage records.</td></tr>@endforelse</tbody></table></div>{{ $returns->links() }}
+@endsection
